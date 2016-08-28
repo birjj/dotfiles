@@ -1,0 +1,102 @@
+#!/bin/bash
+
+##
+# Show hidden windows (should be passed output of hidden through stdin)
+# Default behavior is to use rofi
+# -
+# Options:
+#   --all = show all hidden windows immediately
+##
+
+# we use the temporary file for sharing global variables
+tmp=$(mktemp /tmp/showhidden-script.XXXXXXXX)
+declare -A windows
+
+# first group should be window name, second command to show
+regex="'([^']+)':'(xdotool windowactivate (0x[^ ]+) [^']+)'"
+
+## parse function
+## stdin should be from hidden, output will be rofi
+parse() {
+  while read line
+  do
+    if [[ $line =~ $regex ]]
+    then
+      name="${BASH_REMATCH[1]}"
+      command="${BASH_REMATCH[2]}"
+      id="${BASH_REMATCH[3]}"
+
+      outp="$name ($id)"
+
+      # absolute last fallback for renaming - adds number to end
+      if [[ ${windows[$outp]} ]]
+      then
+        i="1"
+        while [[ ${windows["$name ($id - $i)"]} ]]
+        do
+          i=$[$i+1]
+        done
+        outp="$name ($id - $i)"
+      fi
+      windows[$outp]=$command
+
+      # finally echo out all the names, one by one
+      echo $outp
+    fi
+  done < /dev/stdin
+  
+  # we cannot modify global variables (wtf bash)
+  # write to file instead
+  if [[ ${#windows[@]} -eq 0 ]]
+  then
+    echo "declare -A windows" > $tmp
+  else
+    declare -p windows > $tmp
+  fi
+}
+
+## runner function
+## reads window name from stdin, runs associated command from $windows
+run() {
+  # TODO: find better way to wait for file to be readable
+  while [[ !(-s $tmp) ]]
+  do
+    sleep 0.05
+  done
+
+  source -- "$tmp"
+  while read line
+  do
+    if [[ ${windows[$line]} ]]
+    then
+      eval ${windows[$line]}
+    else
+      # TODO: notifications
+      echo "FAILED TO FIND $line"
+    fi
+  done < /dev/stdin
+}
+
+
+# main execution
+if [[ $1 == '--all' ]]
+then
+  # execute all commands
+  while read line
+  do
+    if [[ $line =~ $regex ]]
+    then
+      command="${BASH_REMATCH[2]}"
+      if [[ $command ]]
+      then
+        eval $command
+      fi
+    fi
+  done < /dev/stdin
+else
+  # parse, pipe to rofi, pipe rofi selection to runner
+  parse | rofi -dmenu -p "unhide:" -only-match | run
+fi
+
+# then clean up
+rm $tmp

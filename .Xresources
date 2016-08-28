@@ -1,0 +1,18 @@
+# font
+Xft.dpi:	96:unscaled
+Xft.antialias:	true
+Xft.rgba:	rgb
+Xft.hinting:	true
+Xft.hintstyle:	hintmedium
+Xft.lcdfilter:	lcddefault
+URxvt.font:	xft:Hasklig:size=8
+URxvt.letterSpace:	-1
+
+# terminal
+URxvt*scrollTtyOutput:		false
+URxvt*scrollWithBuffer:		true
+URxvt*scrollTtyKeypress:	true
+URxvt*scrollBar:		false
+URxvt.perl-ext-common:		default,matcher
+URxvt.url-launcher:		/usr/bin/chromium
+URxvt.matcher.button:		1
