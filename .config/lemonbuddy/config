@@ -4,6 +4,7 @@
 ;throttle_ms = 100
 
 [bar/bottom]
+wm_name = bar-bottom
 bottom = true
 dock = true
 width = 100%

@@ -28,6 +28,18 @@ bspc monitor -d 		term web code music misc
 bspc rule -a chromium desktop='web' follow=on
 bspc rule -a Firefox desktop='web' follow=on
 bspc rule -a Atom desktop='code'
-bspc rule -a URxvt state=pseudo_tiled
+bspc rule -a URxvt state=pseudo_tiled desktop='term'
+
+# show bar below fullscreen
+barid=$(xdo id -a bar-bottom)
+tries=0
+while
+  barid=$(xdo id -a bar-bottom)
+  [[ -z "$barid" && "$tries" -lt 20 ]]
+do
+  sleep 0.05
+  tries=$((tries+1))
+done
+[[ "$barid" ]] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$barid"
 
 $CONFIG/priv-bspwm &

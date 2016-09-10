@@ -18,6 +18,8 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 source $ZSH/oh-my-zsh.sh
+unsetopt share_history
+setopt no_share_history
 
 # kbd
 bindkey -e

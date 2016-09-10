@@ -2,34 +2,22 @@
 
 ##
 # Replaces the wallpaper with a blurred one if windows are open
-# Dependency: wmutils (lsw)
+# Dependency: wmutils (lsw) or bspwm (bspc)
 ##
 
-update() {
-  # for lsw-supported:
-  #win=$(lsw | wc -l)
-  # for bspwm:
+# gen if it doesn't exist
+if [[ ! -f $basepath/blurs/$WALLPAPER ]]; then
+  gen_wallpapers $WALLPAPER
+fi
+
+if [[ $1 == 'bspwm' ]]; then
   win=$(bspc query -N -n .local | wc -l)
-
-  if [[ $win -gt 0 ]] && [[ $is_blurred == false ]]; then
-    feh --bg-fill $basepath/blurs/$WALLPAPER
-    is_blurred=true
-  elif [[ $win -le 0 ]] && [[ $is_blurred == false ]]; then
-    feh --bg-fill $basepath/$WALLPAPER
-    is_blurred=false
-  fi
-}
-
-is_blurred=false
-if [[ $1 -eq 'bspwm' ]]; then
-  update
 else
-  # infinite loop so we keep checking
-  while :;
-  do
-    update
+  win=$(lsw | wc -l)
+fi
 
-    # sleep so we don't use crazy amounts of resources
-    sleep 0.1
-  done
+if [[ $win -gt 0 ]]; then
+  feh --bg-fill $basepath/blurs/$WALLPAPER
+elif [[ $win -le 0 ]]; then
+  feh --bg-fill $basepath/$WALLPAPER
 fi

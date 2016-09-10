@@ -19,24 +19,18 @@ fi
 feh --bg-fill $basepath/$1
 export WALLPAPER=$1
 
+# kill all previous running instances of self
 kill_running() {
-  blurPID=$(pgrep -fl blur_wallpaper | grep -P "[0-9]+" -o)
-  if [[ $blurPID ]]; then
-    kill $blurPID
-  fi
+  while
+    count=$(pgrep -flc ./wallpaper | grep -P "[0-9]+" -o)
+    # two because we use functions n such
+    [[ $count -gt 2 ]]
+  do
+    pid=$(pgrep -flo ./wallpaper | grep -P "[0-9]+" -o)
+    kill $pid
+  done
 }
-run_default() {
-  # run script which blurs/unblurs background
-  # but first kill if it's already running
-  kill_running
-  sh blur_wallpaper
-}
-run_bspwm() {
-  # kill first
-  kill_running
-  # then use bspc to trigger on desktop refocus
-  bspc subscribe desktop_focus | listen_bspwm
-}
+
 listen_bspwm() {
   while read line
   do
@@ -44,7 +38,8 @@ listen_bspwm() {
   done
 }
 
-run_bspwm
+kill_running
+bspc subscribe desktop_focus | listen_bspwm
 
 # run script which blurs/unblurs background
 

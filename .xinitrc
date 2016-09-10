@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # set basic gui
 xsetroot -cursor_name left_ptr &
@@ -9,7 +9,13 @@ wallpaper 2042.jpg &
 
 # run applications
 compton &
-exec bspwm &
-exec chromium &
-exec atom &
-exec urxvt
+chromium &
+atom &
+
+# run terminal daemon
+urxvtd -q -o -f
+(sleep 0.1; urxvtc) &
+
+# run bspwm, and keep X running until it quits
+bspwm
+

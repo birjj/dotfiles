@@ -1,20 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 
 ##
 # Generates blurred versions of all ./wallpapers/*
 # Places the result in ./wallpapers/blurs/
+# If called with a filename, blur that one only
 ##
-WALLS=./wallpapers
+WALLS=$THEME/wallpapers
 BLURS=$WALLS/blurs
 
 function blur() {
   if [[ -f $1 ]]; then
     local OUTP=$BLURS/$(basename $1)
-    echo "$1 -> $OUTP"
+    echo -e "$1 -> \e[1m$OUTP\e[0m"
     ffmpeg -loglevel panic -i "$1" -vf boxblur=5:5 "$OUTP" -y
   fi
 }
 
-for img in ./wallpapers/*; do
-  blur $img
-done
+if [[ ! $1 ]]; then
+  for img in $WALLS/*; do
+    blur $img
+  done
+else
+  blur $WALLS/$1
+fi

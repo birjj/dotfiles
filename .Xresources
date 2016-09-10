@@ -30,7 +30,7 @@ Xft.rgba:	rgb
 Xft.hinting:	true
 Xft.hintstyle:	hintmedium
 Xft.lcdfilter:	lcddefault
-URxvt.font:	xft:Hasklig:size=9,xft:MaterialIcons:pixelsize=10,xft:FontAwesome:pixelsize=10
+URxvt.font:	xft:Hasklig:size=9,MaterialIcons:pixelsize=10,FontAwesome:pixelsize=10
 
 ! terminal
 URxvt*scrollTtyOutput:		false
