@@ -1,0 +1,14 @@
+*
+!*/
+!.gitignore
+!.Xresources
+!.xinitrc
+!.zsh_profile
+!.zshrc
+!.config/compton.conf
+!.config/i3/*
+!.config/lemonbuddy/*
+!.config/bspwm/*
+!.config/sxhkd/*
+!.scripts/*
+!.theme/*

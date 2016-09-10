@@ -1,0 +1,35 @@
+#!/bin/bash
+
+##
+# Replaces the wallpaper with a blurred one if windows are open
+# Dependency: wmutils (lsw)
+##
+
+update() {
+  # for lsw-supported:
+  #win=$(lsw | wc -l)
+  # for bspwm:
+  win=$(bspc query -N -n .local | wc -l)
+
+  if [[ $win -gt 0 ]] && [[ $is_blurred == false ]]; then
+    feh --bg-fill $basepath/blurs/$WALLPAPER
+    is_blurred=true
+  elif [[ $win -le 0 ]] && [[ $is_blurred == false ]]; then
+    feh --bg-fill $basepath/$WALLPAPER
+    is_blurred=false
+  fi
+}
+
+is_blurred=false
+if [[ $1 -eq 'bspwm' ]]; then
+  update
+else
+  # infinite loop so we keep checking
+  while :;
+  do
+    update
+
+    # sleep so we don't use crazy amounts of resources
+    sleep 0.1
+  done
+fi

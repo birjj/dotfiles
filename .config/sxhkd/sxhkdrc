@@ -1,0 +1,86 @@
+# System hotkeys use Alt (eg. shutdown)
+# Destructive hotkeys use Shift (eg. kill process)
+# Normal hotkeys use nothing (eg. move window)
+
+##
+# WM independent hotkeys
+##
+
+# Win+Enter : Terminal
+super + Return
+	urxvt
+
+# Win+Space : Rofi (program launcher)
+super + space
+	rofi -show run
+
+# Win+R : Reload this config
+super + r
+	pkill -USR1 -x sxhkd
+
+# Win+Alt+Esc : Shutdown
+super + shift + escape
+	shutdown
+
+##
+# bspwm hotkeys
+##
+
+## Generic
+# Win+Alt+tEsc : Quit bspwm
+super + alt + Escape
+	bspc quit
+
+# Win+Q : Close & kill the active window
+super + q
+	bspc node -k
+
+## Window modes
+# Win+M : Toggle tiled/monocle
+ super + m
+	bspc desktop -l next
+
+# Win+G : Move active window to biggest space
+super + g
+	bspc node -s biggest
+
+# Win+F : Fullscreen active window
+super + f
+	bspc node -t fullscreen
+
+# Win + {T,Shift + T,S,F} : Set window mode
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscren}
+
+# Win+L : Lock active window
+super + l
+	bspc node -g locked
+
+## Window focus
+# Leftclick : Focus
+#~button1
+#	bspc pointer -g focus
+
+# Win + Tab : Focus last window
+super + Tab
+	bspc node -f last
+
+# Win + {h,j,k,l} : Focus node in direction
+# Win + Shift + {h,j,k,l} : Move node in direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+## Workspaces
+# Win + <Num> : Switch to workspace
+# Win + Shift + <Num> : Move to workspace
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+## Floating window controls
+# Win + [Arrow] : Move window
+super + {left,down,up,right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Win + Shift + [Arrow] : Resize window
+super + shift + {Left,Down,Up,Right}
+	xdotool getwindowfocus windowmove --relative %1 {-20 0, 0 20, 0 -20, 20 0}

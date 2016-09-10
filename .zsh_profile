@@ -1,1 +1,6 @@
-[[ -f ~/.zshrc ]] && . ~/.zshrc
+# startx
+# [[ -f ~/.zshrc ]] && . ~/.zshrc
+
+if [[ -z $DISPLAY ]]; then
+  exec startx
+fi

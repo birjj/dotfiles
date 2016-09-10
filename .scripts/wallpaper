@@ -1,0 +1,51 @@
+#!/bin/bash
+
+##
+# Wallpaper manager
+# Handles changing wallpaper and running blur listener
+# -
+# Usage: wallpaper.sh path-to-file.jpg
+##
+
+export basepath=$HOME/.theme/wallpapers
+
+# end if not given proper file
+if [[ ! -f $basepath/$1 ]]; then
+  echo "File does not exist or is directory: $1"
+  exit
+fi
+
+# set wallpaper and export as env variable
+feh --bg-fill $basepath/$1
+export WALLPAPER=$1
+
+kill_running() {
+  blurPID=$(pgrep -fl blur_wallpaper | grep -P "[0-9]+" -o)
+  if [[ $blurPID ]]; then
+    kill $blurPID
+  fi
+}
+run_default() {
+  # run script which blurs/unblurs background
+  # but first kill if it's already running
+  kill_running
+  sh blur_wallpaper
+}
+run_bspwm() {
+  # kill first
+  kill_running
+  # then use bspc to trigger on desktop refocus
+  bspc subscribe desktop_focus | listen_bspwm
+}
+listen_bspwm() {
+  while read line
+  do
+    blur_wallpaper bspwm
+  done
+}
+
+run_bspwm
+
+# run script which blurs/unblurs background
+
+

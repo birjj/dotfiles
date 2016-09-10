@@ -1,0 +1,129 @@
+[settings]
+; Limits updates pr. <throttle_ms> to <throttle_limit>
+;throttle_limit = 2
+;throttle_ms = 100
+
+[bar/bottom]
+bottom = true
+dock = true
+width = 100%
+height = 30
+offset_y = 0
+padding_left = 3
+padding_right = 4
+module_margin_left = 2
+module_margin_right = 2
+lineheight = 1
+
+foreground = #77ffffff
+background = #00000000
+
+font-0 = xft:Hasklig:size=10;0
+font-1 = MaterialIcons:size=12;-3
+font-2 = FontAwesome:size=12;-3
+
+modules-left = windows
+modules-right = network volume battery clock poweroff
+
+[module/windows]
+type = internal/bspwm
+format = <label-state>
+
+workspace_icon-0 = term;
+workspace_icon-1 = web;
+workspace_icon-2 = code;
+workspace_icon-3 = music;
+workspace_icon-default = 
+
+label-active = %icon%
+label-active-foreground = #fff
+label-active-underline = #fff
+label-active-font = 1
+label-active-padding = 2
+
+label-occupied = %icon%
+label-occupied-underline = ${BAR.foreground}
+label-occupied-font = 1
+label-occupied-padding = 2
+
+label-urgent = %icon%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-underline = #9b02a20
+label-urgent-font = 1
+label-urgent-padding = 2
+
+label-empty = %icon%
+label-empty-foreground = #555
+label-empty-font = 1
+label-empty-padding = 2
+
+[module/network]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+format-connected = <ramp-signal> <label-connected>
+label-connected =   %essid%
+label-disconnected = 
+
+ramp-signal-0 = 
+
+[module/battery]
+type = internal/battery
+format-charging = <label-charging>
+format-discharging = <label-discharging>
+format-full = <label-full>
+label-charging = %percentage%
+label-discharging = %percentage%
+label-full = %percentage%
+
+battery = BAT1
+adapter = ACAD
+poll_interval = 1
+
+ramp-capacity-0-foreground = #f53c3c
+ramp-capacity-1-foreground = #ffa900
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; animation-charging-0 = 
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-framerate_ms = 750
+
+[module/cpu]
+type = internal/cpu
+label = CPU: %percentage%
+
+[module/ram]
+type = internal/memory
+label = RAM: %percentage_used%
+
+[module/volume]
+type = internal/volume
+format-volume = <ramp-volume> <label-volume>
+label-muted = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+
+[module/clock]
+type = internal/date
+date =  %H:%M
+date-detailed = %%{F#999}%Y-%m-%d%%{F-} %%{F#fff}%H:%M%%{F-}
+
+[module/poweroff]
+type = custom/menu
+label-open = 
+label-close = 
+
+menu-0-0 = Shutdown
+menu-0-0-exec = sudo systemctl poweroff
+;menu-0-1 = Reboot
+;menu-0-1-exec = sudo systemctl restart
