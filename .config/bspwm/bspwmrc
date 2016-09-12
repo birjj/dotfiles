@@ -25,8 +25,8 @@ bspc config focus_follows_pointer 	true
 
 bspc monitor -d 		term web code music misc
 
-bspc rule -a chromium desktop='web' follow=on
-bspc rule -a Firefox desktop='web' follow=on
+bspc rule -a chromium desktop='web'
+bspc rule -a Firefox desktop='web'
 bspc rule -a Atom desktop='code'
 bspc rule -a URxvt state=pseudo_tiled desktop='term'
 
@@ -35,7 +35,7 @@ barid=$(xdo id -a bar-bottom)
 tries=0
 while
   barid=$(xdo id -a bar-bottom)
-  [[ -z "$barid" && "$tries" -lt 20 ]]
+  [[ -z "$barid" && "$tries" -lt 200 ]]
 do
   sleep 0.05
   tries=$((tries+1))

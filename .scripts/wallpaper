@@ -34,7 +34,7 @@ kill_running() {
 listen_bspwm() {
   while read line
   do
-    blur_wallpaper bspwm
+    $HOME/.scripts/blur_wallpaper bspwm
   done
 }
 
