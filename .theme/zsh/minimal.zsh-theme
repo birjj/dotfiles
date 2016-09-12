@@ -15,5 +15,5 @@ ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE="$green"
 ZSH_THEME_GIT_PROMPT_AHEAD="$green"
 ZSH_THEME_GIT_PROMPT_DIRTY="$yellow"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
-# we color green by default, which is overwritten by any failures
+
 RPROMPT='$(git_remote_status)$(parse_git_dirty)$(git_current_branch)%{$reset_color%}'

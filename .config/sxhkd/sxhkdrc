@@ -44,13 +44,13 @@ super + q
 super + g
 	bspc node -s biggest
 
-# Win+F : Fullscreen active window
+# Win+F : Toggle fullscreen active window
 super + f
-	bspc node -t fullscreen
+	bspc node focused -t '~fullscreen'
 
-# Win + {T,Shift + T,S,F} : Set window mode
-super + {t,shift + t,s,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscren}
+# Win + {T,Shift + T,S} : Set window mode
+super + {t,shift + t,s}
+	bspc node -t {tiled,pseudo_tiled,floating}
 
 # Win+L : Lock active window
 super + l
@@ -78,9 +78,22 @@ super + {_,shift + }{1-9,0}
 
 ## Floating window controls
 # Win + [Arrow] : Move window
-super + {left,down,up,right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+super + {Left,Down,Up,Right}
+	xdotool getwindowfocus windowmove --relative %1 {-20 0,0 20,0 -20,20 0}
 
-# Win + Shift + [Arrow] : Resize window
-super + shift + {Left,Down,Up,Right}
-	xdotool getwindowfocus windowmove --relative %1 {-20 0, 0 20, 0 -20, 20 0}
+## Utility buttons
+# Volume mute
+XF86AudioMute
+	amixer set Master toggle
+# Volume up
+XF86AudioRaiseVolume
+	amixer set Master playback 1+
+# Volume down
+XF86AudioLowerVolume
+	amixer set Master playback 1-
+# Backlight down
+XF86MonBrightnessDown
+	xbacklight -dec 10
+# Backlight up
+XF86MonBrightnessUp
+	xbacklight -inc 10

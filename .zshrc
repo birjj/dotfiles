@@ -1,6 +1,6 @@
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=
+HISTFILE=/dev/null
+HISTSIZE=0
+SAVEHIST=0
 
 # folders
 export THEME=~/.theme
