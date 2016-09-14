@@ -1,1 +1,1 @@
-chromium --kiosk netflix.com &
+google-chrome-stable --kiosk netflix.com &

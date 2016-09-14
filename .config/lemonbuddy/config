@@ -20,7 +20,7 @@ foreground = #77ffffff
 background = #00000000
 
 font-0 = xft:Hasklig:size=10;0
-font-1 = MaterialIcons:size=12;-3
+font-1 = MaterialIcons:size=12;0
 font-2 = FontAwesome:size=12;-3
 
 modules-left = windows
@@ -34,6 +34,7 @@ workspace_icon-0 = term;
 workspace_icon-1 = web;
 workspace_icon-2 = code;
 workspace_icon-3 = music;
+workspace_icon-4 = games;
 workspace_icon-default = 
 
 label-active = %icon%
@@ -62,12 +63,12 @@ label-empty-padding = 2
 [module/network]
 type = internal/network
 interface = wlp2s0
-interval = 3.0
+interval = 10
 format-connected = <ramp-signal> <label-connected>
-label-connected =   %essid%
+label-connected =  %essid%
 label-disconnected = 
 
-ramp-signal-0 = 
+ramp-signal-0 =
 
 [module/battery]
 type = internal/battery
@@ -75,35 +76,44 @@ format-charging = <label-charging>
 format-discharging = <label-discharging>
 format-full = <label-full>
 label-charging = %percentage%
-label-discharging = %percentage%
-label-full = %percentage%
+label-discharging = %percentage%
+label-full = %percentage%
 
 battery = BAT1
 adapter = ACAD
-poll_interval = 1
+poll_interval = 10
 
-ramp-capacity-0-foreground = #f53c3c
-ramp-capacity-1-foreground = #ffa900
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-0 =
 
-; animation-charging-0 = 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-framerate_ms = 750
+[module/music]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+password =
+interval = 1
 
-[module/cpu]
-type = internal/cpu
-label = CPU: %percentage%
+format-online = <icon-repeat> <icon-random> <bar-progress> <toggle> <icon-next> <label-time>  <label-song>
+label-offline =
+label-song = %title%
 
-[module/ram]
-type = internal/memory
-label = RAM: %percentage_used%
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-seekb = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+
+; Used to display the state of random/repeat/repeatone
+toggle_on-foreground = #ff
+toggle_off-foreground = #55
+
+bar-progress-width = 10
+bar-progress-indicator = |
+bar-progress-fill = ─
+bar-progress-empty = ─
 
 [module/volume]
 type = internal/volume
@@ -112,7 +122,6 @@ label-muted = 
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-ramp-volume-3 = 
 
 [module/clock]
 type = internal/date

@@ -37,7 +37,7 @@ super + q
 
 ## Window modes
 # Win+M : Toggle tiled/monocle
- super + m
+super + m
 	bspc desktop -l next
 
 # Win+G : Move active window to biggest space

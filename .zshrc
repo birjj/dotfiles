@@ -43,3 +43,13 @@ alias showall='hidden -c | showhidden --all'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
+
+# music
+alias music='chromium --app=http://127.0.0.1:6680/mopify &'
+
+# GAMES
+WINDOWS=~/.wine/drive_c
+alias Hearthstone='wine "$WINDOWS/Program Files (x86)/Battle.net/Battle.net.exe" &> /dev/null'
+alias hearthstone=Hearthstone
+alias Battlenet=Hearthstone
+alias battlenet=Hearthstone

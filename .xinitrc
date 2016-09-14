@@ -6,7 +6,6 @@
 # run applications
 compton &
 firefox &
-atom &
 
 # run terminal daemon
 urxvtd -q -o -f

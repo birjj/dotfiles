@@ -23,12 +23,20 @@ bspc config -m left_padding 	10
 bspc config split_ratio 		0.5
 bspc config focus_follows_pointer 	true
 
-bspc monitor -d 		term web code music misc
+bspc monitor -d 		term web code music games misc
 
-bspc rule -a chromium desktop='web'
-bspc rule -a Firefox desktop='web'
-bspc rule -a Atom desktop='code'
-bspc rule -a URxvt state=pseudo_tiled desktop='term'
+bspc rule -a chromium desktop='web' follow=on
+bspc rule -a Firefox desktop='web' follow=on
+bspc rule -a google-chrome desktop='web' follow=on
+bspc rule -a Atom desktop='code' follow=on
+bspc rule -a URxvt state=pseudo_tiled desktop='term' follow=on
+
+bspc rule -a vlc desktop='music' follow=on
+bspc rule -a '127.0.0.1__mopify' desktop='music' follow=on
+
+bspc rule -a 'Battle.net.exe' desktop='games' follow=on
+bspc rule -a 'Hearthstone.exe' desktop='games' follow=on layer='above'
+bspc rule -a 'Wine' desktop='games' follow=on
 
 # show bar below fullscreen
 barid=$(xdo id -a bar-bottom)
