@@ -157,13 +157,18 @@ def menu(internal=False):
     outp = []
 
     length = config["menu"]["length"]
-    for i in sorted(ssids, key=lambda x: 0 if x["ssid"] in known else 1):  # sort by known profile
-        str = "%{A1:"+config["self"]+" connect '"+i["ssid"]+"'}  "
-        ssid = i["ssid"]
+    ssids = sorted(ssids, key=lambda x: 0 if x["ssid"] in known else 1) # sort by known profile
+    for i, x in enumerate(ssids):
+        str = "%{A1:"+config["self"]+" connect '"+x["ssid"]+"'}"
+        if i != 0:  # pad left unless we're the first
+            str += "  "
+        ssid = x["ssid"]
         if (len(ssid) > length):  # truncate the SSID if it exceeds max len
             ssid = ssid[:length - 2]+".."
         str += ssid
-        str += "  %{A}"
+        if (i != len(ssids)-1): # pad right unless we're the last
+            str += "  "
+        str += "%{A}"
         outp.append(str)
     if (internal):
         return config["menu"]["delimiter"].join(outp)

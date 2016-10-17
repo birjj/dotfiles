@@ -77,6 +77,8 @@ type = custom/script
 exec = /home/me/.scripts/network lemon
 interval = 0.1
 
+click-right = nm-connection-editor
+
 [module/battery]
 type = internal/battery
 format-charging = <label-charging>
