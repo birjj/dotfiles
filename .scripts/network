@@ -34,6 +34,7 @@ config = {
     "menu": {
         "length": 16,      # max length for each SSID
         "delimiter": "/",  # delimiter to split options
+        "open-time": 15,   # max seconds to keep menu open without user interaction
     }
 }
 
@@ -110,10 +111,18 @@ def lemon(state=False):
         # read content from shelf
         shelf.seek(0)
         content = shelf.read().split("\n")
-        if (len(content) < 1):  # if we don't have a persistent state, use default
+
+        # if we don't have a persistent state, use default
+        if (len(content) < 1):
             content[0] = False
-        if (not state and len(content) > 2 and float(content[2]) + config["cache-time"] > time.time()):  # if we have a cache and no updates, just use that
-            print(content[1])
+
+        # close menu if it's been too long since we opened it
+        if (len(content) > 3 and float(content[3]) + config["menu"]["open-time"] < time.time()):
+            state = "status"
+
+        # use cache if it's available
+        if (not state and len(content) > 2 and float(content[2]) + config["cache-time"] > time.time()):
+            print(content[1])  # use cache if it's available and not outdated
             return
 
         # load persistent state if not given (or default to "status")
@@ -132,8 +141,15 @@ def lemon(state=False):
             outp += menu(internal=True).replace(config["self"]+" connect", config["self"]+" lemon status;"+config["self"]+" connect")
 
         # store state persistently
+        # format: <state>
+        #         <cache>
+        #         <cache-time>
+        #         <menu-time>
+        persist = state+"\n"+outp+"\n"+str(time.time())
+        if (state == "menu"):
+            persist += "\n"+(content[3] if len(content) > 3 else str(time.time()))
         shelf.truncate(0)
-        shelf.write(state+"\n"+outp+"\n"+str(time.time()))
+        shelf.write(persist)
         shelf.close()
 
         print(outp)
