@@ -7,9 +7,6 @@ sxhkd &
 killall lemonbuddy
 lemonbuddy bottom &
 
-# notifications
-dunst &
-
 bspc config border_width 	2
 bspc config normal_border_color '#2A2525'
 bspc config active_border_color '#494343'

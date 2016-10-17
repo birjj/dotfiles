@@ -1,0 +1,39 @@
+#!/usr/bin/bash
+# settings
+BAT='BAT1'
+WARN=10
+DANGER=5
+SHUT=3
+
+# persistent state: ''=none shown, 1=warn shown, 2=danger shown
+STATE=
+if [[ -f "/tmp/battery-shelve" ]]; then
+  STATE=$(cat /tmp/battery-shelve)
+fi
+
+# notifications
+CAP=$(cat /sys/class/power_supply/$BAT/capacity)
+STATUS=$(cat /sys/class/power_supply/$BAT/status)
+if [[ $STATUS = 'Discharging' ]]; then
+  if [[ $CAP -le $SHUT ]]; then
+    twmnc -l '/home/me/.config/twmn/twmn.conf' --fg '#854340' -c 'Shutting down in 30 seconds due to power loss'
+    sleep 30
+    STATUS=$(cat /sys/class/power_supply/$BAT/status)
+    if [[ $STATUS = 'Discharging' ]]; then
+      systemctl poweroff
+    fi
+  elif [[ $CAP -le $DANGER && $STATE -ne '2' ]]; then
+    twmnc -l '/home/me/.config/twmn/twmn.conf' --fg '#854340' -c 'Connect to power to avoid emergency shutdown'
+    STATE='2'
+  elif [[ $CAP -le $WARN && $STATE -ne '1' ]]; then
+    twmnc -l '/home/me/.config/twmn/twmn.conf' -c 'Battery has reached 10%'
+    STATE='1'
+  elif [[ $CAP -gt $WARN ]]; then
+    STATE=''
+  fi
+else
+  STATE=''
+fi
+
+echo $STATE > /tmp/battery-shelve
+echo $CAP
