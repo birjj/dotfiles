@@ -137,7 +137,7 @@ def lemon(state=False):
             outp += status(internal=True)
             outp += "%{A}"
         elif (state == "menu"):
-            outp = "%{A1:"+config["self"]+" lemon status}%{A} "
+            outp = "%{A1:"+config["self"]+" lemon status} %{A}/  "
             outp += menu(internal=True).replace(config["self"]+" connect", config["self"]+" lemon connect")
 
         # store state persistently
