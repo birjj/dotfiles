@@ -56,6 +56,7 @@ CTEXT="$WHT" # color of entry text
 #
 # examples:
 #
+mkent "OS" "Arch"
 mkent "User" "$(printenv USER)"
 mkent "Shell" "$(basename $(printenv SHELL))"
 mkent "Packages" "$(pacman -Q | wc -l)"

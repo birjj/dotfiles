@@ -31,9 +31,9 @@ super + shift + escape
 super + alt + Escape
 	bspc quit
 
-# Win+Q : Close & kill the active window
-super + q
-	bspc node -k
+# Win+Q : Close (optionally kill) the active window
+super + {_,shift +}q
+	bspc node -{c,k}
 
 ## Window modes
 # Win+M : Toggle tiled/monocle

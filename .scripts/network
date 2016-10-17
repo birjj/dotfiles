@@ -1,0 +1,317 @@
+#!/usr/bin/env python
+import locale
+import os
+import sys
+import time
+from subprocess import Popen, PIPE
+
+help = """Python script which acts as an easier interface to nmcli for wifi connections
+Also provides a lemon* compatible menu and status
+Largely based on nmcli-dmenu, but rewritten completely
+
+Interface:
+    connect <name> # connect to a given SSID
+    disconnect     # disconnect from current connection
+    list [no]      # list available SSID, optionally with icons (default yes, 🔒=secure •=known)
+    scan           # force NetworkManager to rescan available networks
+
+    lemon          # output a lemon* compatible string, acting as both status and menu
+    status         # output a lemon* compatible status string
+    menu           # output a lemon* compatible menu of SSIDs"""
+
+# configuration
+config = {
+    "prompt": ["rofi", "-dmenu", "-p", "{prompt}: ", "-mesg", "Connecting to {ssid}", "-separator-style", "none"],
+    "interface": "wlp2s0",
+    "self": "/home/me/.scripts/network",  # command to run self
+
+    "shelf": "/tmp/network-shelve",  # temporary file for persistent data
+    "cache-time": 10,  # maximum time to keep cache of output
+    "status": {
+        "connected": " {ssid}",  # status when connected
+        "disconnected": "",     # status when disconnected
+    },
+    "menu": {
+        "length": 16,      # max length for each SSID
+        "delimiter": "/",  # delimiter to split options
+    }
+}
+
+ENV = os.environ.copy()
+ENV['LC_ALL'] = 'C'
+ENC = locale.getpreferredencoding()
+
+
+"""
+Main functions
+"""
+# connect to a network, prompting the user for a password if necesarry
+def connect(ssid):
+    # determine if it's a new connection or not
+    known = get_profiles()
+    if (ssid in known):
+        success = connect_profile(ssid)
+    else:
+        ssids = get_ssids()
+        for i in ssids:  # find the matching ssid object
+            if (i["ssid"] == ssid):
+                ssid = i
+                break
+        if (isinstance(ssid, str)):  # stop if we didn't find one
+            return execute(["notify-send", "Unable to find network "+ssid])
+
+        # connect
+        if (ssid["secure"]):
+            ps = prompt({"prompt": "Password", "ssid": ssid["ssid"]})
+            if (ps is False):
+                execute(["notify-send", "Cancelled connection"])
+                return
+        else:
+            ps = None
+        success = connect_new(ssid, ps)
+
+    if (not success):
+        if (not isinstance(ssid, str)):
+            ssid = ssid["ssid"]
+        execute(["notify-send", "-u", "critical", "Failed to connect to "+ssid])
+
+
+# disconnect from the network, placing NetworkManager in manual mode
+def disconnect():
+    commands = ["nmcli", "dev", "disconnect", config["interface"]]
+    if "successfully" not in execute(commands):
+        execute(["notify-send", "Failed to disconnect"])
+
+
+# print a list of SSIDs
+def list(icons=True):
+    known = get_profiles()
+    ssids = get_ssids()
+    for i in sorted(ssids, key=lambda x: 0 if x["ssid"] in known else 1):  # sort by known profile
+        outp = i["ssid"]
+        if (icons):
+            if (i["ssid"] in known):  # add dot if known
+                outp += " •"
+            if (i["secure"]):  # add lock if secure
+                outp += " 🔒"
+        print(outp)
+
+
+# scan for available wifi networks
+def scan():
+    execute(["nmcli", "dev", "wifi", "rescan"])
+
+
+"""
+Lemon* functions
+"""
+def lemon(state=False):
+    with open(config["shelf"], "a+") as shelf:
+        # read content from shelf
+        shelf.seek(0)
+        content = shelf.read().split("\n")
+        if (len(content) < 1):  # if we don't have a persistent state, use default
+            content[0] = False
+        if (not state and len(content) > 2 and float(content[2]) + config["cache-time"] > time.time()):  # if we have a cache and no updates, just use that
+            print(content[1])
+            return
+
+        # load persistent state if not given (or default to "status")
+        if (not state):
+            state = content[0]
+        if (not state):
+            state = "status"
+
+        # load state
+        if (state == "status"):
+            outp = "%{A1:"+config["self"]+" lemon menu:}"
+            outp += status(internal=True)
+            outp += "%{A}"
+        elif (state == "menu"):
+            outp = "%{A1:"+config["self"]+" lemon status}%{A} "
+            outp += menu(internal=True).replace(config["self"]+" connect", config["self"]+" lemon status;"+config["self"]+" connect")
+
+        # store state persistently
+        shelf.truncate(0)
+        shelf.write(state+"\n"+outp+"\n"+str(time.time()))
+        shelf.close()
+
+        print(outp)
+
+
+def status(internal=False):
+    active = get_active_profiles()
+    if (len(active) != 0):
+        status = config["status"]["connected"].format(**{"ssid": active[0]})
+    else:
+        status = config["status"]["disconnected"]
+
+    if (internal):
+        return status
+    print(status)
+
+
+def menu(internal=False):
+    known = get_profiles()
+    ssids = get_ssids()
+    outp = []
+
+    length = config["menu"]["length"]
+    for i in sorted(ssids, key=lambda x: 0 if x["ssid"] in known else 1):  # sort by known profile
+        str = "%{A1:"+config["self"]+" connect '"+i["ssid"]+"'}  "
+        ssid = i["ssid"]
+        if (len(ssid) > length):  # truncate the SSID if it exceeds max len
+            ssid = ssid[:length - 2]+".."
+        str += ssid
+        str += "  %{A}"
+        outp.append(str)
+    if (internal):
+        return config["menu"]["delimiter"].join(outp)
+    print(config["menu"]["delimiter"].join(outp))
+
+
+"""
+Network utility functions below
+"""
+# activate an existing profile, connecting to the network
+# outp: <bool success>
+def connect_profile(profile):
+    # first check if it's already active - if it is, nmcli seems to hang
+    commands = ["nmcli", "-t", "-f", "GENERAL.STATE", "connection", "show", profile]
+    status = "activated" in execute(commands)
+    if (status):
+        return
+
+    commands = ["nmcli", "connection", "up", "id", profile]
+    return ("successfully" in execute(commands))
+
+
+# connect to a new wifi, saving the profile if it succeeds
+# output: <bool success>
+def connect_new(ssid, ps):
+    commands = ["nmcli", "device", "wifi", "connect", ssid["ssid"]]
+    if (ps):
+        commands += ["password", ps]
+    res = execute(commands)
+
+    if ("activated" not in res):  # TODO: check error code instead
+        commands = ["nmcli", "connection", "delete", ssid["ssid"]]
+        execute(commands)
+        return False
+    return True
+
+
+# get a list of currently available SSIDs, ordered by signal strength
+# output: [{ssid: '<ssid>', secure: <bool>}, ...]
+def get_ssids():
+    commands = ["nmcli", "-t", "-f", "SSID,SECURITY,SIGNAL", "dev", "wifi"]
+    ssids = execute(commands).split("\n")[:-1]  # get list from nmcli
+    ssids = [split(i, ':') for i in ssids]  # split list items into arrays
+    ssids = sorted(ssids, key=lambda x: int(x[2]), reverse=True)  # sort by 3rd item (signal strength)
+    ssids = [{"ssid": i[0], "secure": bool(i[1]) and i[1] != '--'} for i in ssids]  # format to dictionary
+    return ssids
+
+
+# get a list of available profiles from networkmanager
+# output: ['<ssid>', ...]
+def get_profiles():
+    commands = ["nmcli", "-t", "-f", "NAME", "connection"]
+    ssids = execute(commands).split("\n")[:-1]
+    return ssids
+
+
+# get a list of currently active profiles
+# output: ['<ssid>', ...]
+def get_active_profiles():
+    commands = ["nmcli", "-t", "-f", "NAME", "connection", "show", "--active"]
+    ssids = execute(commands).split("\n")[:-1]
+    return ssids
+
+
+# get whether the network is currently active
+# output: <bool>
+def get_network_status():
+    network = execute(["nmcli", "networking"])  # get overall network status
+    if (network != 'enabled'):
+        return False
+
+    network = eecute(["nmcli", "r", "wifi"])  # get wifi status
+    if (network != 'enabled'):
+        return False
+    return True
+
+
+"""
+Utility functions below
+"""
+# prompt for input, returning False if input is 'Cancel'
+def prompt(formatDict):
+    commands = config["prompt"]
+    commands = [i.format(**formatDict) for i in commands]
+    print(commands)
+    inp = Popen(commands, stdout=PIPE, stdin=PIPE)
+    inp = inp.communicate(input=b"Cancel")[0].decode(ENC).split("\n")[0]
+    if (inp and inp != 'Cancel'):
+        return inp
+    return False
+
+
+# execute a command array, and return the output string
+def execute(arr):
+    return Popen(arr, stdout=PIPE).communicate()[0].decode(ENC)
+
+
+# split a function at a character, unless it is escaped by \
+def split(str, delim, esc="\\"):
+    outp = []
+    current = []
+    itr = iter(str)
+    for ch in itr:
+        if (ch == esc):  # skip if escape character
+            try:
+                current.append(next(itr))
+            except StopIteration:
+                current.append(esc)
+        elif ch == delim:  # split if delimiter
+            outp.append(''.join(current))
+            current = []
+        else:
+            current.append(ch)
+    outp.append(''.join(current))
+    return outp
+
+"""
+Execute the command
+"""
+if (len(sys.argv) == 1):
+    print(help)
+else:
+    arg = sys.argv[1]
+    if (arg == "connect"):
+        if (len(sys.argv) == 2):
+            print("'connect' requires two parameters")
+        else:
+            connect(sys.argv[2])
+    elif (arg == "disconnect"):
+        disconnect()
+    elif (arg == "list"):
+        if (len(sys.argv) == 2):
+            icons = True
+        else:
+            icons = not ("no" == sys.argv[2])
+        list(icons)
+    elif (arg == "scan"):
+        scan()
+
+    elif (arg == "lemon"):
+        if (len(sys.argv) > 2):
+            lemon(sys.argv[2])
+        else:
+            lemon()
+    elif (arg == "status"):
+        status()
+    elif (arg == "menu"):
+        menu()
+
+    else:
+        print("Unknown command '"+sys.argv[1]+"'")

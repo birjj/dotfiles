@@ -1,19 +1,21 @@
 [settings]
 ; Limits updates pr. <throttle_ms> to <throttle_limit>
-;throttle_limit = 2
-;throttle_ms = 100
+throttle-limit = 2
+throttle-ms = 100
 
 [bar/bottom]
-wm_name = bar-bottom
+wm-name = bar-bottom
+; tray-position = right
+wm-restack = bspwm
 bottom = true
 dock = true
 width = 100%
 height = 30
-offset_y = 0
-padding_left = 3
-padding_right = 4
-module_margin_left = 2
-module_margin_right = 2
+offset-y = 0
+padding-left = 3
+padding-right = 4
+module-margin-left = 2
+module-margin-right = 2
 lineheight = 1
 
 foreground = #77ffffff
@@ -24,18 +26,18 @@ font-1 = MaterialIcons:size=12;0
 font-2 = FontAwesome:size=12;-3
 
 modules-left = windows
-modules-right = network volume battery clock poweroff
+modules-right = network-menu volume battery clock poweroff
 
 [module/windows]
 type = internal/bspwm
 format = <label-state>
 
-workspace_icon-0 = term;
-workspace_icon-1 = web;
-workspace_icon-2 = code;
-workspace_icon-3 = music;
-workspace_icon-4 = games;
-workspace_icon-default = 
+ws-icon-0 = term;
+ws-icon-1 = web;
+ws-icon-2 = code;
+ws-icon-3 = music;
+ws-icon-4 = games;
+ws-icon-default = 
 
 label-active = %icon%
 label-active-foreground = #fff
@@ -70,6 +72,11 @@ label-disconnected = 
 
 ramp-signal-0 =
 
+[module/network-menu]
+type = custom/script
+exec = /home/me/.scripts/network lemon
+interval = 0.1
+
 [module/battery]
 type = internal/battery
 format-charging = <label-charging>
@@ -81,7 +88,7 @@ label-full = %percentage%
 
 battery = BAT1
 adapter = ACAD
-poll_interval = 10
+poll-interval = 10
 
 ramp-capacity-0 =
 
@@ -107,8 +114,8 @@ icon-random = 
 icon-repeat = 
 
 ; Used to display the state of random/repeat/repeatone
-toggle_on-foreground = #ff
-toggle_off-foreground = #55
+toggle-on-foreground = #ff
+toggle-off-foreground = #55
 
 bar-progress-width = 10
 bar-progress-indicator = |
@@ -126,7 +133,7 @@ ramp-volume-2 = 
 [module/clock]
 type = internal/date
 date =  %H:%M
-date-detailed = %%{F#999}%Y-%m-%d%%{F-} %%{F#fff}%H:%M%%{F-}
+date-alt =  %Y-%m-%d %H:%M
 
 [module/poweroff]
 type = custom/menu
@@ -135,5 +142,5 @@ label-close = 
 
 menu-0-0 = Shutdown
 menu-0-0-exec = sudo systemctl poweroff
-;menu-0-1 = Reboot
-;menu-0-1-exec = sudo systemctl restart
+menu-0-1 = Reboot
+menu-0-1-exec = sudo systemctl restart

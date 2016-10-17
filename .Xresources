@@ -1,25 +1,25 @@
 ! colors = dkeg/crayolo/shade
 #include "/home/me/.theme/colors/paints"
-*background:   bg  
-*foreground:   fg  
-*cursorColor:  cyn 
- 
-*color0:      blk  
-*color8:      bblk  
-*color1:      red  
-*color9:      red  
-*color2:      grn  
-*color10:     grn  
-*color3:      ylw  
-*color11:     ylw  
-*color4:      blu  
-*color12:     blu  
-*color5:      mag  
-*color13:     mag  
-*color6:      cyn  
-*color14:     cyn  
-*color7:      wht  
-*color15:     wht  
+*background:   bg
+*foreground:   fg
+*cursorColor:  cyn
+
+*color0:      blk
+*color8:      bblk
+*color1:      red
+*color9:      red
+*color2:      grn
+*color10:     grn
+*color3:      ylw
+*color11:     ylw
+*color4:      blu
+*color12:     blu
+*color5:      mag
+*color13:     mag
+*color6:      cyn
+*color14:     cyn
+*color7:      wht
+*color15:     wht
 
 *borderColor: bg
 
@@ -32,6 +32,11 @@ Xft.hintstyle:	hintmedium
 Xft.lcdfilter:	lcddefault
 URxvt.font:	xft:Hasklig:size=9,MaterialIcons:pixelsize=10,FontAwesome:pixelsize=10
 
+! dzen
+dzen2.font: *-Hasklig-*-*-*-*-*-9-*-*-p-*-*-*
+dzen2.foreground: #ff0000
+dzen2.background: bg
+
 ! terminal
 URxvt*scrollTtyOutput:		false
 URxvt*scrollWithBuffer:		true
@@ -41,3 +46,15 @@ URxvt.perl-ext-common:		default,matcher
 URxvt.url-launcher:		/usr/bin/chromium
 URxvt.matcher.button:		1
 URxvt.internalBorder:           15
+
+! rofi
+rofi.bw: 2
+rofi.hide-scrollbar: true
+rofi.color-enabled: true
+rofi.color-window: bg, #494343
+rofi.color-normal: bg, fg, #352f2f, b1l, fg
+! rofi blur
+!rofi.width: 1366
+!rofi.padding: 300
+!rofi.color-window: #00000000, #00000000
+!rofi.opacity: 80

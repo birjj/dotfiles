@@ -53,3 +53,4 @@ alias Hearthstone='wine "$WINDOWS/Program Files (x86)/Battle.net/Battle.net.exe"
 alias hearthstone=Hearthstone
 alias Battlenet=Hearthstone
 alias battlenet=Hearthstone
+alias eu4='~/.steam/steam/steamapps/common/Europa\ Universalis\ IV/eu4'

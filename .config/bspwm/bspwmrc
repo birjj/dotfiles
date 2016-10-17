@@ -4,8 +4,11 @@
 sxhkd &
 
 # lemonbar
-lemonbuddy_terminate noconfirm
-lemonbuddy_wrapper bottom &
+killall lemonbuddy
+lemonbuddy bottom &
+
+# notifications
+dunst &
 
 bspc config border_width 	2
 bspc config normal_border_color '#2A2525'
