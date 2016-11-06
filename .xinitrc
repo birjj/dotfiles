@@ -14,7 +14,7 @@ export SSH_AUTH_SOCK
 
 # run wm-independent config
 syndaemon -i 0.2 -k -R &
-twmnd &
+dunst &
 
 # set basic gui
 xsetroot -cursor_name left_ptr &

@@ -1,9 +1,14 @@
 #!/usr/bin/bash
+
+if [ -r "$HOME/.dbus/Xdbus" ]; then
+  . "$HOME/.dbus/Xdbus"
+fi
+
 # settings
 BAT='BAT1'
 WARN=10
 DANGER=5
-SHUT=3
+SHUT=2
 
 # persistent state: ''=none shown, 1=warn shown, 2=danger shown
 STATE=
@@ -16,23 +21,28 @@ CAP=$(cat /sys/class/power_supply/$BAT/capacity)
 STATUS=$(cat /sys/class/power_supply/$BAT/status)
 if [[ $STATUS = 'Discharging' ]]; then
   if [[ $CAP -le $SHUT ]]; then
-    twmnc -l '/home/me/.config/twmn/twmn.conf' --fg '#854340' -c 'Shutting down in 30 seconds due to power loss'
+    /usr/bin/notify-send -u 'critical' 'Battery low' 'Shutting down in 30 seconds due to power loss'
     sleep 30
     STATUS=$(cat /sys/class/power_supply/$BAT/status)
     if [[ $STATUS = 'Discharging' ]]; then
-      systemctl poweroff
+      /usr/bin/sudo /usr/bin/systemctl poweroff
     fi
+    echo "OFF"
   elif [[ $CAP -le $DANGER && $STATE -ne '2' ]]; then
-    twmnc -l '/home/me/.config/twmn/twmn.conf' --fg '#854340' -c 'Connect to power to avoid emergency shutdown'
+    /usr/bin/notify-send -u 'critical' 'Battery low' 'Connect to power to avoid emergency shutdown'
     STATE='2'
-  elif [[ $CAP -le $WARN && $STATE -ne '1' ]]; then
-    twmnc -l '/home/me/.config/twmn/twmn.conf' -c 'Battery has reached 10%'
+    echo "DANGER"
+  elif [[ $CAP -le $WARN && $STATE -ne '1' && $STATE -ne '2' ]]; then
+    /usr/bin/notify-send 'Battery low' "Battery has reached ${WARN}%"
     STATE='1'
+    echo "WARN"
   elif [[ $CAP -gt $WARN ]]; then
     STATE=''
+    echo "SAFE"
   fi
 else
   STATE=''
+  echo "Chargin"
 fi
 
 echo $STATE > /tmp/battery-shelve

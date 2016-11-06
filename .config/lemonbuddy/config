@@ -75,7 +75,7 @@ ramp-signal-0 =
 [module/network-menu]
 type = custom/script
 exec = /home/me/.scripts/network lemon
-interval = 0.1
+interval = 1
 
 click-right = nm-connection-editor
 

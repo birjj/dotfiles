@@ -87,13 +87,18 @@ XF86AudioMute
 	amixer set Master toggle
 # Volume up
 XF86AudioRaiseVolume
-	amixer set Master playback 1+
+	amixer set Master playback 5+
 # Volume down
 XF86AudioLowerVolume
-	amixer set Master playback 1-
+	amixer set Master playback 5-
 # Backlight down
 XF86MonBrightnessDown
 	xbacklight -dec 10
 # Backlight up
 XF86MonBrightnessUp
 	xbacklight -inc 10
+# Screenshot
+Print
+	scrot -q 100 /tmp/screen.png
+Shift + Print
+	scrot -q 100 -s -b 
