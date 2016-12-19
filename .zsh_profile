@@ -1,5 +1,5 @@
-# startx
-# [[ -f ~/.zshrc ]] && . ~/.zshrc
+#startx
+#[[ -f ~/.zshrc ]] && . ~/.zshrc
 
 if [[ -z $DISPLAY ]] && [[ $(fgconsole) -lt 3 ]]; then
   exec startx

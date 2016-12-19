@@ -15,10 +15,10 @@ bspc config bottom_padding 	22
 bspc config window_gap 		10
 bspc config single_monocle 	true
 # bspc config borderless_monocle 	true
-bspc config -m top_padding 	10
-bspc config -m bottom_padding 	10
-bspc config -m right_padding 	10
-bspc config -m left_padding 	10
+#bspc config top_padding 	10
+#bspc config bottom_padding 	10
+#bspc config right_padding 	10
+#bspc config left_padding 	10
 
 bspc config split_ratio 		0.5
 bspc config focus_follows_pointer 	true
@@ -50,4 +50,4 @@ do
 done
 [[ "$barid" ]] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$barid"
 
-$CONFIG/priv-bspwm &
+#$CONFIG/priv-bspwm &

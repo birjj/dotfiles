@@ -1,11 +1,12 @@
 HISTFILE=/dev/null
-HISTSIZE=0
-SAVEHIST=0
+HISTSIZE=
+SAVEHIST=
 
 # folders
 export THEME=~/.theme
 export SCRIPTS=~/.scripts
 export CONFIG=~/.config
+export PRIV=~/.priv
 export PATH=$SCRIPTS:${PATH}
 
 # oh-my-zsh
@@ -32,12 +33,13 @@ export VISUAL='nano'
 
 # aliases
 alias wifi='sudo wifi-menu -o wlp2s0'
-alias shutdown='sudo systemctl poweroff'
-alias restart='sudo systemctl reboot'
+alias shutdown='systemctl poweroff'
+alias restart='systemctl reboot'
 alias pls=please
 alias please='sudo $(fc -ln -1)'
 alias show='hidden -c | showhidden'
 alias showall='hidden -c | showhidden --all'
+alias ffeh='feh -F'
 
 # colorizing commands
 alias diff='diff --color=auto'
@@ -48,9 +50,11 @@ alias ls='ls --color=auto'
 alias music='chromium --app=http://127.0.0.1:6680/mopify &'
 
 # GAMES
-WINDOWS=~/.wine/drive_c
-alias Hearthstone='wine "$WINDOWS/Program Files (x86)/Battle.net/Battle.net.exe" &> /dev/null'
-alias hearthstone=Hearthstone
-alias Battlenet=Hearthstone
-alias battlenet=Hearthstone
-alias eu4='~/.steam/steam/steamapps/common/Europa\ Universalis\ IV/eu4'
+#WINDOWS=~/.wine/drive_c
+#alias Hearthstone='wine "$WINDOWS/Program Files (x86)/Battle.net/Battle.net.exe" &> /dev/null'
+#alias hearthstone=Hearthstone
+#alias Battlenet=Hearthstone
+#alias battlenet=Hearthstone
+#alias eu4='~/.steam/steam/steamapps/common/Europa\ Universalis\ IV/eu4'
+
+$PRIV/.zshrc

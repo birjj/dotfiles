@@ -24,6 +24,7 @@
 *borderColor: bg
 
 ! font
+*.font: 	xft:Hasklig:size=9,MaterialIcons:pixelsize=10,FontAwesome:pixelsize=10
 Xft.dpi:	96:unscaled
 Xft.antialias:	true
 Xft.rgba:	rgb
@@ -31,6 +32,7 @@ Xft.hinting:	true
 Xft.hintstyle:	hintmedium
 Xft.lcdfilter:	lcddefault
 URxvt.font:	xft:Hasklig:size=9,MaterialIcons:pixelsize=10,FontAwesome:pixelsize=10
+URxvt.letterSpace: -1
 
 ! dzen
 dzen2.font: *-Hasklig-*-*-*-*-*-9-*-*-p-*-*-*
@@ -43,9 +45,10 @@ URxvt*scrollWithBuffer:		true
 URxvt*scrollTtyKeypress:	true
 URxvt*scrollBar:		false
 URxvt.perl-ext-common:		default,matcher
-URxvt.url-launcher:		/usr/bin/chromium
+URxvt.url-launcher:		/usr/bin/firefox
 URxvt.matcher.button:		1
 URxvt.internalBorder:           15
+URxvt.saveLines:		10000
 
 ! rofi
 rofi.bw: 2

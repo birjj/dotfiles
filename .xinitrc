@@ -21,4 +21,4 @@ xsetroot -cursor_name left_ptr &
 $HOME/.scripts/wallpaper 2042.jpg &
 
 # run bspwm, and keep X running until it quits
-bspwm
+bspwm >> $HOME/.logs/bspwm
