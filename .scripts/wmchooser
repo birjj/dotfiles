@@ -1,0 +1,14 @@
+# ask user if he wants XFCE4 or BSPWM
+ROWS=$(tput lines)
+((PADY = ROWS / 2 - 2))
+clear
+for ((i = 0; i < PADY; ++i)); do
+  echo
+done
+echo "Launch BSPWM or XFCE4?"
+select wm in "BSPWM" "XFCE4"; do
+  case $wm in
+    BSPWM ) startx; break;;
+    XFCE4 ) startxfce4;;
+  esac
+done
