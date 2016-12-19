@@ -61,9 +61,12 @@ super + l
 #~button1
 #	bspc pointer -g focus
 
-# Win + Tab : Focus last window
+# Win + Tab : Focus next window in current desktop
 super + Tab
-	bspc node -f last
+	bspc node -f next.local
+# Win + Shift + Tab : Focus next window
+super + Shift + Tab
+	bspc node -f next
 
 # Win + {h,j,k,l} : Focus node in direction
 # Win + Shift + {h,j,k,l} : Move node in direction
@@ -101,4 +104,4 @@ XF86MonBrightnessUp
 Print
 	scrot -q 100 /tmp/screen.png
 Shift + Print
-	scrot -q 100 -s -b 
+	scrot -q 100 -s -b
