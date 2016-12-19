@@ -38,7 +38,7 @@ mkent() {
 
     local ENT="$2"
     while ((${#ENT} < LEN - ${#1})); do
-        ENT=" $ENT" 
+        ENT=" $ENT"
     done
 
     ENT="$CNAME""$1""$CTEXT""$ENT""$RST"
