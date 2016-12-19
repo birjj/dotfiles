@@ -5,7 +5,7 @@ sxhkd &
 
 # lemonbar
 killall lemonbuddy
-lemonbuddy bottom &
+polybar bottom &
 
 bspc config border_width 	2
 bspc config normal_border_color '#2A2525'
@@ -37,17 +37,5 @@ bspc rule -a '127.0.0.1__mopify' desktop='music' follow=on
 bspc rule -a 'Battle.net.exe' desktop='games' follow=on
 bspc rule -a 'Hearthstone.exe' desktop='games' follow=on layer='above'
 bspc rule -a 'Wine' desktop='games' follow=on
-
-# show bar below fullscreen
-barid=$(xdo id -a bar-bottom)
-tries=0
-while
-  barid=$(xdo id -a bar-bottom)
-  [[ -z "$barid" && "$tries" -lt 200 ]]
-do
-  sleep 0.05
-  tries=$((tries+1))
-done
-[[ "$barid" ]] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$barid"
 
 #$CONFIG/priv-bspwm &

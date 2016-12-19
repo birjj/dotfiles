@@ -8,7 +8,7 @@
 .config/*
 !.config/compton.conf
 !.config/i3/
-!.config/lemonbuddy/
+!.config/polybar/
 !.config/bspwm/
 !.config/sxhkd/
 !.config/dunst/
