@@ -39,8 +39,7 @@ listen_bspwm() {
 }
 
 kill_running
-bspc subscribe desktop_focus | listen_bspwm
-
 # run script which blurs/unblurs background
-
-
+bspc subscribe node_manage | listen_bspwm &
+bspc subscribe node_unmanage | listen_bspwm &
+bspc subscribe desktop_focus | listen_bspwm
