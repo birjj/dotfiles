@@ -5,7 +5,7 @@ throttle-ms = 100
 
 [bar/bottom]
 wm-name = bar-bottom
-; tray-position = right
+tray-position = right
 wm-restack = bspwm
 bottom = true
 width = 100%
