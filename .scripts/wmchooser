@@ -5,7 +5,7 @@ clear
 for ((i = 0; i < PADY; ++i)); do
   echo
 done
-echo "Launch BSPWM or XFCE4?"
+echo " Launch BSPWM or XFCE4?"
 select wm in "BSPWM" "XFCE4"; do
   case $wm in
     BSPWM ) startx; break;;

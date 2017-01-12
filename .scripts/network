@@ -137,7 +137,7 @@ def lemon(state=False):
             outp += status(internal=True)
             outp += "%{A}"
         elif (state == "menu"):
-            outp = "%{A1:"+config["self"]+" lemon status} %{A}/  "
+            outp = "%{A1:"+config["self"]+" lemon status:} %{A}/  "
             outp += menu(internal=True).replace(config["self"]+" connect", config["self"]+" lemon connect")
 
         # store state persistently
@@ -175,7 +175,7 @@ def menu(internal=False):
     length = config["menu"]["length"]
     ssids = sorted(ssids, key=lambda x: 0 if x["ssid"] in known else 1) # sort by known profile
     for i, x in enumerate(ssids):
-        str = "%{A1:"+config["self"]+" connect '"+x["ssid"]+"'}"
+        str = "%{A1:"+config["self"]+" connect '"+x["ssid"]+"':}"
         if i != 0:  # pad left unless we're the first
             str += "  "
         ssid = x["ssid"]

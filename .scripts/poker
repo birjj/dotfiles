@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=PokerStars.dk
+Exec=env WINEPREFIX="/home/me/.wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/me/.wine/dosdevices/c:/users/Public/Desktop/PokerStars.dk.lnk
+Type=Application
+StartupNotify=true
+Path=/home/me/.wine/dosdevices/c:/Program Files (x86)/PokerStars.DK
+Icon=7649_PokerStars.0
