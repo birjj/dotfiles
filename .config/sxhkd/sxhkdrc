@@ -84,6 +84,10 @@ super + {_,shift + }{1-9,0}
 super + {Left,Down,Up,Right}
 	xdotool getwindowfocus windowmove --relative %1 {-20 0,0 20,0 -20,20 0}
 
+# Win + LeftClick : Move window
+super + button{1-2}
+	bspc pointer -g {move,resize_corner}
+
 ## Utility buttons
 # Volume mute
 XF86AudioMute
