@@ -18,7 +18,7 @@ dunst &
 
 # set basic gui
 xsetroot -cursor_name left_ptr &
-$HOME/.scripts/wallpaper 2042.jpg &
+$HOME/.scripts/wallpaper 103929.png &
 
 # run bspwm, and keep X running until it quits
 bspwm >> $HOME/.logs/bspwm
