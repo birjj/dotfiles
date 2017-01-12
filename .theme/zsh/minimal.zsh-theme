@@ -1,5 +1,5 @@
 # left prompt is simply top-most folder, followed by arrow
-PROMPT='%F{8}%1~ » %f'
+PROMPT='%F{8}%5~ » %f'
 
 # right prompt is simply branch name, colored by git status
 # red : behind remote (need to pull & merge)
