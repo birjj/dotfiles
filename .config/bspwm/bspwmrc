@@ -4,7 +4,7 @@
 sxhkd &
 
 # lemonbar
-killall lemonbuddy
+killall polybar
 polybar bottom &
 
 bspc config border_width 	2
@@ -37,5 +37,6 @@ bspc rule -a '127.0.0.1__mopify' desktop='music' follow=on
 bspc rule -a 'Battle.net.exe' desktop='games' follow=on
 bspc rule -a 'Hearthstone.exe' desktop='games' follow=on layer='above'
 bspc rule -a 'Wine' desktop='games' follow=on
+bspc rule -a 'Steam' desktop='games'
 
 #$CONFIG/priv-bspwm &
