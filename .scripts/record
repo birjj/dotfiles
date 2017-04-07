@@ -1,0 +1,5 @@
+#!/bin/bash
+ffcast -s % ffmpeg -y -f x11grab -show_region 1 -framerate 30       \
+    -video_size %s -i %D+%c                                         \
+    -pix_fmt yuv420p -codec:v libx264 -crf 18 -preset slow          \
+    -vf crop="iw-mod(iw\\,2):ih-mod(ih\\,2)" record.mp4
