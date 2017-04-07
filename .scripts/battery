@@ -8,7 +8,7 @@ fi
 BAT='BAT1'
 WARN=10
 DANGER=5
-SHUT=2
+SHUT=3
 
 # persistent state: ''=none shown, 1=warn shown, 2=danger shown
 STATE=
@@ -22,12 +22,13 @@ STATUS=$(cat /sys/class/power_supply/$BAT/status)
 if [[ $STATUS = 'Discharging' ]]; then
   if [[ $CAP -le $SHUT ]]; then
     /usr/bin/notify-send -u 'critical' 'Battery low' 'Shutting down in 30 seconds due to power loss'
+    echo "SHUTDOWN"
     sleep 30
     STATUS=$(cat /sys/class/power_supply/$BAT/status)
     if [[ $STATUS = 'Discharging' ]]; then
-      /usr/bin/systemctl poweroff
+      echo "OFF"
+      /sbin/shutdown now # requires chmod u+x /sbin/shutdown
     fi
-    echo "OFF"
   elif [[ $CAP -le $DANGER && $STATE -ne '2' ]]; then
     /usr/bin/notify-send -u 'critical' 'Battery low' 'Connect to power to avoid emergency shutdown'
     STATE='2'

@@ -1,3 +1,4 @@
+#!/bin/bash
 # ask user if he wants XFCE4 or BSPWM
 ROWS=$(tput lines)
 ((PADY = ROWS / 2 - 2))
