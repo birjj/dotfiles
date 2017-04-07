@@ -21,7 +21,7 @@ foreground = #77ffffff
 background = #00000000
 
 font-0 = xft:Hasklig:size=10;0
-font-1 = MaterialIcons:size=12;0
+font-1 = MaterialIcons:size=12;2
 font-2 = FontAwesome:size=12;-3
 
 modules-left = windows

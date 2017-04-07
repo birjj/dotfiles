@@ -14,29 +14,27 @@ bspc config focused_border_color '#494343'
 bspc config bottom_padding 	22
 bspc config window_gap 		10
 bspc config single_monocle 	true
-# bspc config borderless_monocle 	true
-#bspc config top_padding 	10
-#bspc config bottom_padding 	10
-#bspc config right_padding 	10
-#bspc config left_padding 	10
 
 bspc config split_ratio 		0.5
 bspc config focus_follows_pointer 	true
 
 bspc monitor -d 		term web code music games misc
 
-bspc rule -a chromium desktop='web' follow=on
-bspc rule -a Firefox desktop='web' follow=on
-bspc rule -a google-chrome desktop='web' follow=on
+bspc rule -a chromium desktop='web'
+bspc rule -a Firefox desktop='web'
+bspc rule -a 'google-chrome' desktop='web'
+bspc rule -a 'Google-chrome' desktop='web'
+bspc rule -a 'Netflix' desktop='music' follow=on
 bspc rule -a Atom desktop='code' follow=on
+bspc rule -a Code desktop='code' follow=on
 bspc rule -a URxvt state=pseudo_tiled desktop='term' follow=on
 
 bspc rule -a vlc desktop='music' follow=on
 bspc rule -a '127.0.0.1__mopify' desktop='music' follow=on
-
+bspc rule -a 'Spotify' desktop='music' follow=on
 bspc rule -a 'Battle.net.exe' desktop='games' follow=on
 bspc rule -a 'Hearthstone.exe' desktop='games' follow=on layer='above'
 bspc rule -a 'Wine' desktop='games' follow=on
 bspc rule -a 'Steam' desktop='games'
 
-#$CONFIG/priv-bspwm &
+. /home/me/.config/priv-bspwm
