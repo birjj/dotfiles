@@ -140,8 +140,9 @@ date-alt =  %Y-%m-%d %H:%M
 type = custom/menu
 label-open = 
 label-close = 
+label-separator = /
 
 menu-0-0 = Shutdown
-menu-0-0-exec = sudo systemctl poweroff
+menu-0-0-exec = /sbin/shutdown now ; requires chmod u+x /sbin/shutdown
 menu-0-1 = Reboot
-menu-0-1-exec = sudo systemctl restart
+menu-0-1-exec = /sbin/reboot now ; requires chmod u+x /sbin/reboot
