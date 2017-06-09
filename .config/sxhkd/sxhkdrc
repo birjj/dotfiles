@@ -94,10 +94,10 @@ XF86AudioMute
 	amixer set Master toggle
 # Volume up
 XF86AudioRaiseVolume
-	amixer set Master playback 5+
+	amixer set Master playback 5%+
 # Volume down
 XF86AudioLowerVolume
-	amixer set Master playback 5-
+	amixer set Master playback 5%-
 # Backlight down
 XF86MonBrightnessDown
 	xbacklight -dec 10
