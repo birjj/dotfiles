@@ -2,18 +2,24 @@ HISTFILE=/dev/null
 HISTSIZE=
 SAVEHIST=
 
+# ssh
+# export TERM='xterm-256color'
+#eval "$(ssh-agent -s)" > /dev/null
+#ssh-add ~/.ssh/id_rsa >/dev/null 2&>1
+
 # folders
 export THEME=~/.theme
 export SCRIPTS=~/.scripts
 export CONFIG=~/.config
 export PRIV=~/.priv
 export PATH=$SCRIPTS:${PATH}
+export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
 # oh-my-zsh
 ZSH=/usr/share/oh-my-zsh/
 ZSH_CUSTOM=$THEME/zsh
 ZSH_THEME="minimal"
-plugins=(git colored-man-pages colorize command-not-found)
+plugins=(git colored-man-pages colorize command-not-found zsh-autosuggestions)
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
