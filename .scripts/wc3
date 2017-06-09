@@ -1,0 +1,2 @@
+#!/sbin/bash
+wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Warcraft\ III/Frozen\ Throne.exe -opengl
