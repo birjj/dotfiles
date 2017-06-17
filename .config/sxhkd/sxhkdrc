@@ -108,4 +108,4 @@ XF86MonBrightnessUp
 Print
 	scrot -q 100 /tmp/screen.png
 Shift + Print
-	scrot -q 100 -s -b
+	peek
