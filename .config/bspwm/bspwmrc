@@ -40,5 +40,9 @@ bspc rule -a 'Hearthstone.exe' desktop='games' follow=on layer='above'
 bspc rule -a 'Wine' desktop='games' follow=on
 bspc rule -a 'Steam' desktop='games'
 bspc rule -a 'streamlink-twitch-gui' desktop='music' follow=on
+bspc rule -a 'Zathura' desktop='music' follow=on state=tiled
+
+# Programming
+bspc rule -a 'Tk' state=floating
 
 . /home/me/.config/priv-bspwm
