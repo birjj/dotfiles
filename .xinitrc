@@ -6,6 +6,7 @@
 # run applications
 compton &
 urxvt &
+udiskie &
 
 # keyring (for wifi applet)
 # eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
