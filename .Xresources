@@ -24,7 +24,7 @@
 *borderColor: bg
 
 ! font
-*.font: 	xft:Hasklig:size=9,MaterialIcons:pixelsize=10,FontAwesome:pixelsize=10
+!*.font:	xft:Hasklig:size=9
 Xft.dpi:	96:unscaled
 Xft.antialias:	true
 Xft.rgba:	rgb
