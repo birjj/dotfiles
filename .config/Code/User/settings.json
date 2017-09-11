@@ -1,0 +1,34 @@
+{
+    "workbench.statusBar.visible": true,
+    "workbench.activityBar.visible": true,
+    "javascript.implicitProjectConfig.checkJs": true,
+    "editor.renderIndentGuides": true,
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true
+    },
+    "editor.minimap.enabled": true,
+    "editor.minimap.renderCharacters": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "window.openFilesInNewWindow": "off",
+    "window.menuBarVisibility": "toggle",
+    "explorer.openEditors.visible": 0,
+    "workbench.iconTheme": "vs-seti",
+    "eslint.options": {
+        "parserOptions": {
+            "ecmaVersion": 8
+        }
+    },
+    "auto-close-tag.SublimeText3Mode": true,
+    "workbench.colorTheme": "Bimbo Theme",
+    "files.insertFinalNewline": true
+}
