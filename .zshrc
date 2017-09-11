@@ -5,7 +5,7 @@ SAVEHIST=
 # ssh
 # export TERM='xterm-256color'
 #eval "$(ssh-agent -s)" > /dev/null
-#ssh-add ~/.ssh/id_rsa >/dev/null 2&>1
+#ssh-add ~/.ssh/id_rsa >/dev/null 2>&1
 
 # folders
 export THEME=~/.theme
@@ -33,6 +33,7 @@ bindkey -e
 setxkbmap dk
 
 # stuff
+export PYTHONPATH=$PYTHONPATH:$HOME/.libs/swampy
 export LANG=en_US.UTF-8
 export EDITOR='nano'
 export VISUAL='nano'

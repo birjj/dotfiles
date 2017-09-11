@@ -1,3 +1,4 @@
+
 # System hotkeys use Alt (eg. shutdown)
 # Destructive hotkeys use Shift (eg. kill process)
 # Normal hotkeys use nothing (eg. move window)
@@ -106,6 +107,6 @@ XF86MonBrightnessUp
 	xbacklight -inc 10
 # Screenshot
 Print
-	scrot -q 100 /tmp/screen.png
+	scrot -e 'xclip -selection clipboard -t image/png -i $f && rm $f'
 Shift + Print
 	peek
