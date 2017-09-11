@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+CONFIG_PATH=~/vpn
+echo $CONFIG_PATH/$1
+sudo openvpn --config "$CONFIG_PATH/$1"
+
+

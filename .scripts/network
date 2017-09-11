@@ -5,7 +5,7 @@ import sys
 import time
 from subprocess import Popen, PIPE
 
-help = """Python script which acts as an easier interface to nmcli for wifi connections
+helpStr = """Python script which acts as an easier interface to nmcli for wifi connections
 Also provides a lemon* compatible menu and status
 Largely based on nmcli-dmenu, but rewritten completely
 
@@ -85,7 +85,7 @@ def disconnect():
 
 
 # print a list of SSIDs
-def list(icons=True):
+def listSSIDs(icons=True):
     known = get_profiles()
     ssids = get_ssids()
     for i in sorted(ssids, key=lambda x: 0 if x["ssid"] in known else 1):  # sort by known profile
@@ -157,14 +157,14 @@ def lemon(state=False):
 
 def status(internal=False):
     active = get_active_profiles()
-    if (len(active) != 0):
-        status = config["status"]["connected"].format(**{"ssid": active[0]})
+    if len(active) != 0:
+        _status = config["status"]["connected"].format(**{"ssid": active[0]})
     else:
-        status = config["status"]["disconnected"]
+        _status = config["status"]["disconnected"]
 
-    if (internal):
-        return status
-    print(status)
+    if internal:
+        return _status
+    print(_status)
 
 
 def menu(internal=False):
@@ -177,18 +177,18 @@ def menu(internal=False):
     for i, x in enumerate(ssids):
         if not x["ssid"]:
             continue
-        str = "%{A1:"+config["self"]+" connect '"+x["ssid"]+"':}"
+        itemStr = "%{A1:"+config["self"]+" connect '"+x["ssid"]+"':}"
         if i != 0:  # pad left unless we're the first
-            str += "  "
+            itemStr += "  "
         ssid = x["ssid"]
-        if (len(ssid) > length):  # truncate the SSID if it exceeds max len
+        if len(ssid) > length:  # truncate the SSID if it exceeds max len
             ssid = ssid[:length - 2]+".."
-        str += ssid
-        if (i != len(ssids)-1): # pad right unless we're the last
-            str += "  "
-        str += "%{A}"
-        outp.append(str)
-    if (internal):
+        itemStr += ssid
+        if i != len(ssids)-1: # pad right unless we're the last
+            itemStr += "  "
+        itemStr += "%{A}"
+        outp.append(itemStr)
+    if internal:
         return config["menu"]["delimiter"].join(outp)
     print(config["menu"]["delimiter"].join(outp))
 
@@ -258,7 +258,7 @@ def get_network_status():
     if (network != 'enabled'):
         return False
 
-    network = eecute(["nmcli", "r", "wifi"])  # get wifi status
+    network = execute(["nmcli", "r", "wifi"])  # get wifi status
     if (network != 'enabled'):
         return False
     return True
@@ -306,39 +306,38 @@ def split(str, delim, esc="\\"):
 """
 Execute the command
 """
-if (len(sys.argv) == 1):
-    print(help)
+if len(sys.argv) == 1:
+    print(helpStr)
 else:
-    arg = sys.argv[1]
-    if (arg == "connect"):
-        if (len(sys.argv) == 2):
+    ARG = sys.argv[1]
+    if ARG == "connect":
+        if len(sys.argv) == 2:
             print("'connect' requires two parameters")
         else:
             connect(sys.argv[2])
-    elif (arg == "disconnect"):
+    elif ARG == "disconnect":
         disconnect()
-    elif (arg == "list"):
-        if (len(sys.argv) == 2):
-            icons = True
+    elif ARG == "list":
+        if len(sys.argv) == 2:
+            ICONS = True
         else:
-            icons = not ("no" == sys.argv[2])
-        list(icons)
-    elif (arg == "scan"):
+            ICONS = not sys.argv[2] == "no"
+        listSSIDs(ICONS)
+    elif ARG == "scan":
         scan()
 
-    elif (arg == "lemon"):
-        if (len(sys.argv) > 2):
-            if (sys.argv[2] == "connect" and len(sys.argv) > 3):
+    elif ARG == "lemon":
+        if len(sys.argv) > 2:
+            if sys.argv[2] == "connect" and len(sys.argv) > 3:
                 lemon("status")
                 connect(sys.argv[3])
             else:
                 lemon(sys.argv[2])
         else:
             lemon()
-    elif (arg == "status"):
+    elif ARG == "status":
         status()
-    elif (arg == "menu"):
+    elif ARG == "menu":
         menu()
-
     else:
         print("Unknown command '"+sys.argv[1]+"'")
