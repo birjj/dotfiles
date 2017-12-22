@@ -30,13 +30,17 @@ setopt no_share_history
 
 # kbd
 bindkey -e
-setxkbmap dk
+#setxkbmap dk
+#xmodmap ~/.Xmodmap
 
 # stuff
 export PYTHONPATH=$PYTHONPATH:$HOME/.libs/swampy
 export LANG=en_US.UTF-8
 export EDITOR='nano'
 export VISUAL='nano'
+
+# java stuff
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # aliases
 alias wifi='sudo wifi-menu -o wlp2s0'

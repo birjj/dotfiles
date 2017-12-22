@@ -29,6 +29,8 @@ bspc rule -a 'Firefox-NoFollow' desktop='misc'
 bspc rule -a 'Netflix' desktop='music' follow=on
 bspc rule -a Atom desktop='code' follow=on
 bspc rule -a Code desktop='code' follow=on
+bspc rule -a 'jetbrains-studio' desktop='code' follow=on
+bspc rule -a 'jetbrains-idea-ce' desktop='code' follow=on
 bspc rule -a URxvt state=pseudo_tiled desktop='term' follow=on
 
 bspc rule -a 'Vlc' desktop='music' follow=on

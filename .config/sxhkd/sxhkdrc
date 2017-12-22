@@ -107,6 +107,6 @@ XF86MonBrightnessUp
 	xbacklight -inc 10
 # Screenshot
 Print
-	scrot -e 'xclip -selection clipboard -t image/png -i $f && rm $f'
+	gscreenshot-cli -c -s
 Shift + Print
 	peek
