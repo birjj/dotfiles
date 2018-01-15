@@ -22,7 +22,7 @@ background = #00000000
 
 font-0 = xft:Hasklig:size=10;0
 font-1 = MaterialIcons:size=12;2
-font-2 = FontAwesome:size=12;-3
+font-2 = FontAwesome:size=12
 
 modules-left = windows
 modules-right = network-menu volume battery clock poweroff
