@@ -14,6 +14,7 @@ Interface:
     disconnect     # disconnect from current connection
     list [no]      # list available SSID, optionally with icons (default yes, 🔒=secure •=known)
     scan           # force NetworkManager to rescan available networks
+    restart        # restarts NetworkManager, in case it bugs out
 
     lemon          # output a lemon* compatible string, acting as both status and menu
     status         # output a lemon* compatible status string
@@ -325,6 +326,8 @@ else:
         listSSIDs(ICONS)
     elif ARG == "scan":
         scan()
+    elif ARG == "restart":
+        execute(["sudo", "systemctl", "restart", "NetworkManager"])
 
     elif ARG == "lemon":
         if len(sys.argv) > 2:
