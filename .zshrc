@@ -56,6 +56,7 @@ alias ffeh='feh -F'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 # music
 alias music='chromium --app=http://127.0.0.1:6680/mopify &'

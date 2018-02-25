@@ -1,0 +1,8 @@
+# Highlighting
+include "~/.nano/nanorc.nanorc"
+include "~/.nano/python.nanorc"
+include "~/.nano/conf.nanorc"
+include "~/.nano/git.nanorc"
+include "~/.nano/nginx.nanorc"
+include "~/.nano/sh.nanorc"
+include "~/.nano/zsh.nanorc"
