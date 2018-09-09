@@ -13,11 +13,12 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/node_modules": true
+        "**/node_modules": true,
+        "**/.rpt2_cache": true
     },
     "editor.minimap.enabled": true,
     "editor.minimap.renderCharacters": false,
-    "editor.acceptSuggestionOnEnter": "off",
+    "editor.acceptSuggestionOnEnter": "on",
     "editor.acceptSuggestionOnCommitCharacter": false,
     "window.openFilesInNewWindow": "off",
     "window.menuBarVisibility": "toggle",
@@ -30,5 +31,6 @@
     },
     "auto-close-tag.SublimeText3Mode": true,
     "workbench.colorTheme": "Bimbo Theme",
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "telemetry.enableTelemetry": false
 }

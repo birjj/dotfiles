@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # hotkeys
-sxhkd &
+sxhkd >> $HOME/.logs/sxhkd 2>&1 &
 
 # lemonbar
 killall polybar
@@ -31,6 +31,8 @@ bspc rule -a Atom desktop='code' follow=on
 bspc rule -a Code desktop='code' follow=on
 bspc rule -a 'jetbrains-studio' desktop='code' follow=on
 bspc rule -a 'jetbrains-idea-ce' desktop='code' follow=on
+bspc rule -a 'NetBeans IDE 8.2' desktop='code' follow=on
+bspc rule -a 'java-lang-Thread' desktop='code' follow=on
 bspc rule -a URxvt state=pseudo_tiled desktop='term' follow=on
 
 bspc rule -a 'Vlc' desktop='music' follow=on
@@ -48,3 +50,5 @@ bspc rule -a 'Zathura' desktop='music' follow=on state=tiled
 bspc rule -a 'Tk' state=floating
 
 . /home/me/.config/priv-bspwm
+
+bspc wm --adopt-orphans
