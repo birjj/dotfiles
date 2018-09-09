@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+import sys
+import locale
+from subprocess import Popen, PIPE
+ENC = locale.getpreferredencoding()
+def read_file(file):
+  with open(file) as f:
+    return f.read()
+def execute(arr):
+  return Popen(arr, stdout=PIPE).communicate()[0].decode(ENC)
+
+values = [0, 0.3, 0.6, 1, 2, 5, 10, 20, 40, 70, 100]
+curFile = "/sys/class/backlight/intel_backlight/brightness"
+curValue = int(read_file(curFile))
+maxValue = int(read_file("/sys/class/backlight/intel_backlight/max_brightness"))
+cur = curValue / maxValue * 100
+
+closestI = 0
+closestDist = 999
+for i in range(len(values)):
+  dist = abs(cur - values[i])
+  if dist < closestDist:
+    closestI = i
+    closestDist = dist
+
+targetI = closestI
+if len(sys.argv) >= 2:
+  if sys.argv[1] == "+":
+    targetI = min(len(values) - 1, closestI + 1)
+  elif sys.argv[1] == "-":
+    targetI = max(0, closestI - 1)
+
+if targetI != closestI:
+  execute(["xbacklight", "-set", str(values[targetI])])
+else:
+  print("cur/max: "+str(curValue)+"/"+str(maxValue))
+  print("index: "+str(closestI))
+

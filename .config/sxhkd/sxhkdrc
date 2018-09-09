@@ -92,7 +92,7 @@ super + button{1-2}
 ## Utility buttons
 # Volume mute
 XF86AudioMute
-	amixer set Master toggle
+	amixer -D pulse set Master toggle
 # Volume up
 XF86AudioRaiseVolume
 	amixer set Master playback 5%+
@@ -101,12 +101,12 @@ XF86AudioLowerVolume
 	amixer set Master playback 5%-
 # Backlight down
 XF86MonBrightnessDown
-	xbacklight -dec 10
+	/home/me/.scripts/brightness -
 # Backlight up
 XF86MonBrightnessUp
-	xbacklight -inc 10
+	/home/me/.scripts/brightness +
 # Screenshot
 Print
-	gscreenshot-cli -c -s
+	maim -s | xclip -selection clipboard -t image/png
 Shift + Print
 	peek
