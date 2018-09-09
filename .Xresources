@@ -44,11 +44,14 @@ URxvt*scrollTtyOutput:		false
 URxvt*scrollWithBuffer:		true
 URxvt*scrollTtyKeypress:	true
 URxvt*scrollBar:		false
-URxvt.perl-ext-common:		default,matcher
+URxvt.perl-ext-common:		default,matcher,resize-font
 URxvt.url-launcher:		/usr/bin/firefox
 URxvt.matcher.button:		1
 URxvt.internalBorder:           15
 URxvt.saveLines:		10000
+URxvt.keysym.C-Down:		resize-font:smaller
+URxvt.keysym.C-Up:		resize-font:bigger
+URxvt.keysym.C-0:		resize-font:reset
 
 ! rofi
 rofi.bw: 2
